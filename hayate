@@ -1,24 +1,34 @@
 #!/usr/bin/env bash
-# Periodically check if specified user logged in and 
-# send notification email if found
-# usage: hayate TARGET RECIPIENT_EMAIL
+#
+# Periodically check if specified user is logging in and 
+# send notification email
+#
+# Run this script once or upon login
+#
+# usage: 
+#     hayate TARGET RECIPIENT_EMAIL
 # example:
-#   hayate evil-user admin@example.com
+#     hayate watched_user admin@example.com
 
 username="$1"
 recipient="$2"
 usage='usage: hayate TARGET RECIPIENT_EMAIL'
-[ $# -ne 2 ] && { echo "$usage" >&2; exit 1; }
+[ $# -lt 2 ] && { echo "$usage" >&2; exit 1; }
 tmprc="/tmp/hayate.rc"
+session='hayate-session'
+sleeptime=120
 cat > "$tmprc" <<EOF
 while true
 do
-    if who | grep $username > /dev/null
+    if who | grep '$username' > /dev/null
     then
         who | mutt -s "WARNING: Watched user logging in on $(hostname)" $recipient
+        sleep $sleeptime
     else
-        sleep 60
+        sleep 2
     fi
 done
 EOF
-screen -dmS 'hayate-session' bash "$tmprc"
+# Remove existing sessions
+screen -ls "$session" > /dev/null && screen -X -S "$session" quit
+screen -dmS "$session" bash "$tmprc"
