@@ -30,5 +30,5 @@ do
 done
 EOF
 # Remove existing sessions
-screen -ls "$session" > /dev/null && screen -X -S "$session" quit
+screen -ls "$session" | grep "$session" > /dev/null && screen -X -S "$session" quit
 screen -dmS "$session" bash "$tmprc"
