@@ -22,7 +22,7 @@ while true
 do
     if who | grep '$username' > /dev/null
     then
-        who | mutt -s "WARNING: Watched user logging in on $(hostname)" $recipient
+        { who; echo; w; } | mutt -s "WARNING: Watched user logging in on $(hostname)" $recipient
         sleep $sleeptime
     else
         sleep 2
