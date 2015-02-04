@@ -31,3 +31,5 @@ Stop monitoring by quiting the session:
 ::
 
     $ screen -X -S hayate-session quit
+
+To receive emails, make sure setting up your mutt correctly.
