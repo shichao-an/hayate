@@ -10,25 +10,25 @@
 # example:
 #     hayate watched_user admin@example.com
 
-username="$1"
-recipient="$2"
-usage='usage: hayate TARGET RECIPIENT_EMAIL'
-[ $# -lt 2 ] && { echo "$usage" >&2; exit 1; }
-tmprc="/tmp/hayate.rc"
-session='hayate-session'
-sleeptime=120
-cat > "$tmprc" <<EOF
+USERNAME="$1"
+RECIPIENT="$2"
+USAGE='usage: hayate TARGET RECIPIENT_EMAIL'
+[ $# -lt 2 ] && { echo "$USAGE" >&2; exit 1; }
+TMPRC="/tmp/hayate.rc"
+SESSION='hayate-session'
+SLEEPTIME=120
+cat > "$TMPRC" <<EOF
 while true
 do
-    if who | grep '$username' > /dev/null
+    if who | grep '$USERNAME' > /dev/null
     then
-        { who; echo; w; } | mutt -s "WARNING: Watched user logging in on $(hostname)" $recipient
-        sleep $sleeptime
+        { who; echo; w; } | mutt -s "WARNING: Watched user logging in on $(hostname)" $RECIPIENT
+        sleep $SLEEPTIME
     else
         sleep 2
     fi
 done
 EOF
 # Remove existing sessions
-screen -ls "$session" | grep "$session" > /dev/null && screen -X -S "$session" quit
-screen -dmS "$session" bash "$tmprc"
+screen -ls "$SESSION" | grep "$SESSION" > /dev/null && screen -X -S "$SESSION" quit
+screen -dmS "$SESSION" bash "$TMPRC"
