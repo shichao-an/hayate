@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #
-# Periodically check if specified user is logging in and 
+# Periodically check if specified user is logging in and
 # send notification email
 #
 # Run this script once or upon login
 #
-# usage: 
+# usage:
 #     hayate TARGET RECIPIENT_EMAIL
 # example:
 #     hayate watched_user admin@example.com
